@@ -1,0 +1,32 @@
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        
+        int node = graph.length, edges = graph[0].length;
+        int[] colors = new int[node];
+        
+        for(int i=0;i<node;i++){
+            if(colors[i] == 0 && !dfs(graph, colors, i, 1))
+                return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean dfs(int[][] graph, int[] colors, int i, int col){
+        colors[i] = col;
+        
+        for(int neigh: graph[i]){
+            //check if neighbour has same color
+            if(colors[neigh] == colors[i]){
+                return false;
+            }
+            
+            //check if neigh is colored, if not color it
+            if(colors[neigh] == 0 && !dfs(graph, colors, neigh, -col)){
+                return false;
+            }  
+        }
+       return true; 
+    }
+    
+}
